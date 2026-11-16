@@ -66,3 +66,26 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 npm run build
 npm run start
 ```
+
+---
+
+## 🚀 CI/CD Pipeline (GitHub Actions)
+
+An automated continuous integration & deployment workflow is configured in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+
+* **Triggers**: On every `push` or `pull_request` to `main`, and manual execution via `workflow_dispatch`.
+* **CI Quality Gate**:
+  1. Checks out repository (`actions/checkout@v4`).
+  2. Sets up Node.js 20 with npm caching (`actions/setup-node@v4`).
+  3. Installs dependencies cleanly (`npm ci`).
+  4. Runs TypeScript type-checking (`npx tsc --noEmit`).
+  5. Compiles production static site (`npm run build` into `./out`).
+* **CD Automated Deployment (GitHub Pages)**:
+  * Automatically uploads the static build artifact (`actions/upload-pages-artifact@v3`).
+  * Deploys directly to GitHub Pages (`actions/deploy-pages@v4`).
+
+### Enabling GitHub Pages for Auto-Deployment:
+1. Open your repository on GitHub (`https://github.com/Pradeep2532/Portfolio`).
+2. Go to **Settings** → **Pages** (in the left sidebar).
+3. Under **Build and deployment** → **Source**, select **GitHub Actions**.
+4. Push your commits to `main` — GitHub Actions will automatically run the pipeline and deploy your portfolio live!
